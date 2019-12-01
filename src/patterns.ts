@@ -151,7 +151,8 @@ export const IP_ADDRESS_STRING =
 /**
  * Valid UCS characters defined in RFC 3987. Excludes space characters.
  */
-const UCS_CHAR = "[" +
+const UCS_CHAR = "\\xA0-\\u200D\\u2010-\\u2029\\u202F-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF";
+const UCS_CHAR_ = "[" +
     "\u00A0-\uD7FF" +
     "\uF900-\uFDCF" +
     "\uFDF0-\uFFEF" +
@@ -198,9 +199,9 @@ const HOST_NAME = "(" + IRI_LABEL + "\\.)+" + TLD;
 
 const DOMAIN_NAME_STR = "(" + HOST_NAME + "|" + IP_ADDRESS_STRING + ")";
 
-export const DOMAIN_NAME = new RegExp(DOMAIN_NAME_STR);
+export const DOMAIN_NAME = new RegExp(DOMAIN_NAME_STR, 'g');
 
-const PROTOCOL = "(?i:http|https|rtsp)://";
+const PROTOCOL = "(http|https|rtsp)://";
 
 /* A word boundary or end of input.  This is to stop foo.sure from matching as foo.su */
 const WORD_BOUNDARY = "(?:\\b|$|^)";
