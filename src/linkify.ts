@@ -1,11 +1,6 @@
-import { MatchFilter } from "./matchFilter";
-import { isDigit } from "./utils";
-import { TransformFilter } from "./transformFilter";
-import { digitsAndPlusOnly, AUTOLINK_WEB_URL, AUTOLINK_EMAIL_ADDRESS } from "./patterns";
-import { logError } from "./log";
-
 /*
  * Copyright (C) 2007 The Android Open Source Project
+ * Copyright (C) 2019 Julien Roncaglia <julien@roncaglia.fr>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,33 +15,53 @@ import { logError } from "./log";
  * limitations under the License.
  */
 
-/**
-*  Linkify take a piece of text and a regular expression and turns all of the
-*  regex matches in the text into clickable links.  This is particularly
-*  useful for matching things like email addresses, web URLs, etc. and making
-*  them actionable.
-*
-*  Alone with the pattern that is to be matched, a URL scheme prefix is also
-*  required.  Any pattern match that does not begin with the supplied scheme
-*  will have the scheme prepended to the matched text when the clickable URL
-*  is created.  For instance, if you are matching web URLs you would supply
-*  the scheme <code>http://</code>. If the pattern matches example.com, which
-*  does not have a URL scheme prefix, the supplied scheme will be prepended to
-*  create <code>http://example.com</code> when the clickable URL link is
-*  created.
-*
-*  <p class="note"><b>Note:</b> When using {@link #MAP_ADDRESSES} or {@link #ALL}
-*  to match street addresses on API level {@link android.os.Build.VERSION_CODES#O_MR1}
-*  and earlier, methods in this class may throw
-*  {@link android.util.AndroidRuntimeException} or other exceptions if the
-*  device's WebView implementation is currently being updated, because
-*  {@link android.webkit.WebView#findAddress} is required to match street
-*  addresses.
-*
-* @see MatchFilter
-* @see TransformFilter
-*/
+import { isDigit } from "./utils";
+import { digitsAndPlusOnly, AUTOLINK_WEB_URL, AUTOLINK_EMAIL_ADDRESS } from "./patterns";
+import { logError } from "./log";
+import { LinkSpec, pruneOverlaps } from "./LinkSpec";
 
+/**
+ *  Examines the character span matched by the pattern and determines
+ *  if the match should be turned into an actionable link.
+ *
+ *  MatchFilter enables client code to have more control over
+ *  what is allowed to match and become a link, and what is not.
+ *
+ *  For example:  when matching web URLs you would like things like
+ *  http://www.example.com to match, as well as just example.com itelf.
+ *  However, you would not want to match against the domain in
+ *  support@example.com.  So, when matching against a web URL pattern you
+ *  might also include a MatchFilter that disallows the match if it is
+ *  immediately preceded by an at-sign (@).
+ *
+ *  @param s        The body of text against which the pattern
+ *                  was matched
+ *  @param start    The index of the first character in s that was
+ *                  matched by the pattern - inclusive
+ *  @param end      The index of the last character in s that was
+ *                  matched - exclusive
+ *
+ *  @return         Whether this match should be turned into a link
+ */
+export type MatchFilter = (s: string, start: number, end: number) => boolean;
+
+/**
+ *  Examines the matched text and either passes it through or uses the
+ *  data in the Matcher state to produce a replacement.
+ * 
+ *  TransformFilter enables client code to have more control over
+ *  how matched patterns are represented as URLs.
+ *
+ *  For example:  when converting a phone number such as (919)  555-1212
+ *  into a tel: URL the parentheses, white space, and hyphen need to be
+ *  removed to produce tel:9195551212.
+ *
+ *  @param match    The regex matcher state that found this URL text
+ *  @param url      The text that was matched
+ *
+ *  @return         The transformed form of the URL
+ */
+export type TransformFilter = (match: RegExpExecArray, url: string) => string;
 
 /**
  *  Bit field indicating that web URLs should be matched in methods that
@@ -276,52 +291,4 @@ function gatherLinks(links: LinkSpec[],
             links.push(spec);
         }
     }
-}
-
-function pruneOverlaps(links: LinkSpec[]) {
-    const c = (a: LinkSpec, b: LinkSpec) => {
-        if (a.start < b.start) {
-            return -1;
-        }
-        if (a.start > b.start) {
-            return 1;
-        }
-        if (a.end < b.end) {
-            return 1;
-        }
-        if (a.end > b.end) {
-            return -1;
-        }
-        return 0;
-    };
-
-    links.sort(c);
-    let len = links.length;
-    let i = 0;
-    while (i < len - 1) {
-        const a = links[i];
-        const b = links[i + 1];
-        let remove = -1;
-        if ((a.start <= b.start) && (a.end > b.start)) {
-            if (b.end <= a.end) {
-                remove = i + 1;
-            } else if ((a.end - a.start) > (b.end - b.start)) {
-                remove = i + 1;
-            } else if ((a.end - a.start) < (b.end - b.start)) {
-                remove = i;
-            }
-            if (remove != -1) {
-                links.splice(remove, 1);
-                len--;
-                continue;
-            }
-        }
-        i++;
-    }
-}
-
-export interface LinkSpec {
-    url: string;
-    start: number;
-    end: number;
 }

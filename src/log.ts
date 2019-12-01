@@ -1,3 +1,13 @@
+type LogErrorF = (error: string) => void;
+
+let logErrorF: LogErrorF | undefined;
+
+export function setLogError(value: LogErrorF) {
+    logErrorF = value;
+}
+
 export function logError(text: string) {
-    console.log(text);
+    if (logErrorF) {
+        logErrorF(text);
+    }
 }
