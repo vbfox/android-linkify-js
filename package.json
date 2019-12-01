@@ -1,0 +1,23 @@
+{
+  "name": "android-linkify-js",
+  "version": "0.0.1",
+  "description": "A Typescript port of Android Linkify utility",
+  "main": "dist/index.js",
+  "repository": "https://github.com/vbfox/android-linkify-js",
+  "author": "Julien Roncaglia <julien@roncaglia.fr>",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "yarn tsc",
+    "prepublishOnly": "yarn build"
+  },
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.d.ts"
+  ],
+  "directories": {
+    "lib": "dist"
+  },
+  "devDependencies": {
+    "typescript": "^3.7.2"
+  }
+}

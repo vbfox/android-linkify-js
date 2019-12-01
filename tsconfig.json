@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "target": "es2018",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "noImplicitAny": true,
+        "strict": true,
+        "removeComments": false,
+        "allowSyntheticDefaultImports": true,
+        "outDir": "dist",
+        "declaration": true
+    },
+    "include": ["src"]
+}
