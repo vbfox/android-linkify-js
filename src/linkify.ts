@@ -240,10 +240,15 @@ function makeUrl(url: string, prefixes: string[],
 
     let hasPrefix = false;
     for (let i = 0; i < prefixes.length; i++) {
-        if (url.localeCompare(prefixes[i], undefined, { sensitivity: 'accent' })) {
+        if (url.length < prefixes[i].length) {
+            continue;
+        }
+
+        const urlPrefixRange = url.substring(0, prefixes[i].length);
+        if (urlPrefixRange.localeCompare(prefixes[i], undefined, { sensitivity: 'accent' }) === 0) {
             hasPrefix = true;
             // Fix capitalization if necessary
-            if (!url.localeCompare(prefixes[i], undefined, { sensitivity: 'case' })) {
+            if (urlPrefixRange.localeCompare(prefixes[i], undefined, { sensitivity: 'case' }) !== 0) {
                 url = prefixes[i] + url.substring(prefixes[i].length);
             }
             break;

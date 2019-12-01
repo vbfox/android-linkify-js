@@ -228,7 +228,8 @@ export const WEB_URL = new RegExp("("
     + ")"
     + "(" + PATH_AND_QUERY + ")?"
     + WORD_BOUNDARY
-    + ")");
+    + ")",
+    'g');
 
 /**
  * Regular expression that matches known TLDs and punycode TLDs
@@ -293,7 +294,7 @@ const WEB_URL_WITH_PROTOCOL = "("
  * @hide
  */
 export const AUTOLINK_WEB_URL = new RegExp(
-    "(" + WEB_URL_WITH_PROTOCOL + "|" + WEB_URL_WITHOUT_PROTOCOL + ")");
+    "(" + WEB_URL_WITH_PROTOCOL + "|" + WEB_URL_WITHOUT_PROTOCOL + ")", 'g');
 
 /**
  * Regular expression for valid email characters. Does not include some of the valid characters
@@ -322,7 +323,8 @@ const EMAIL_ADDRESS_DOMAIN =
  */
 export const AUTOLINK_EMAIL_ADDRESS = new RegExp("(" + WORD_BOUNDARY +
     "(?:" + EMAIL_ADDRESS_LOCAL_PART + "@" + EMAIL_ADDRESS_DOMAIN + ")" +
-    WORD_BOUNDARY + ")"
+    WORD_BOUNDARY + ")",
+    'g'
 );
 
 export const EMAIL_ADDRESS
@@ -333,8 +335,10 @@ export const EMAIL_ADDRESS
         "(" +
         "\\." +
         "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
-        ")+"
+        ")+",
+        'g'
     );
+
 /**
  * This pattern is intended for searching for things that look like they
  * might be phone numbers in arbitrary text, not for validating whether
@@ -353,7 +357,7 @@ export const PHONE
     = new RegExp(                      // sdd = space, dot, or dash
         "(\\+[0-9]+[\\- \\.]*)?"        // +<digits><sdd>*
         + "(\\([0-9]+\\)[\\- \\.]*)?"   // (<digits>)<sdd>*
-        + "([0-9][0-9\\- \\.]+[0-9])"); // <digit><digit|sdd>+<digit>
+        + "([0-9][0-9\\- \\.]+[0-9])", 'g'); // <digit><digit|sdd>+<digit>
 
 export function digitsAndPlusOnly(matches: RegExpExecArray): string {
     let buffer = '';
