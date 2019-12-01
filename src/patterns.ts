@@ -354,8 +354,9 @@ export const PHONE
         + "(\\([0-9]+\\)[\\- \\.]*)?"   // (<digits>)<sdd>*
         + "([0-9][0-9\\- \\.]+[0-9])"); // <digit><digit|sdd>+<digit>
 
-export function digitsAndPlusOnly(matchingRegion: string): string {
+export function digitsAndPlusOnly(matches: RegExpExecArray): string {
     let buffer = '';
+    let matchingRegion = matches[0];
     
     for (let i = 0, size = matchingRegion.length; i < size; i++) {
         const character = matchingRegion.charAt(i);

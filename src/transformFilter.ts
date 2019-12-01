@@ -14,4 +14,4 @@
  *
  *  @return         The transformed form of the URL
  */
-export type TransformFilter = (match: string, url: string) => string;
+export type TransformFilter = (match: RegExpExecArray, url: string) => string;
