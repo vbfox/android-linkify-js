@@ -9,7 +9,9 @@
   "scripts": {
     "build": "yarn tsc",
     "prepublishOnly": "yarn build",
-    "test": "yarn jest"
+    "test": "yarn jest",
+    "preversion": "yarn build",
+    "postversion": "git push && git push --tags"
   },
   "files": [
     "dist/**/*.js",
@@ -18,6 +20,11 @@
   "directories": {
     "lib": "dist"
   },
+  "keywords": [
+    "link",
+    "linkify",
+    "parse"
+  ],
   "devDependencies": {
     "@types/jest": "^24.0.23",
     "jest": "^24.9.0",
