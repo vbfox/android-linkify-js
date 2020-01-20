@@ -262,7 +262,8 @@ const RELAXED_DOMAIN_NAME =
  */
 const WEB_URL_WITHOUT_PROTOCOL = "("
     + WORD_BOUNDARY
-    + "(?<!:\\/\\/)"
+    // TODO HANDLE THIS DIFFERENTLY, LOOKBEHIND IS PROBLEMATIC
+    // + "(?<!:\\/\\/)"
     + "("
     + "(?:" + STRICT_DOMAIN_NAME + ")"
     + "(?:" + PORT_NUMBER + ")?"
