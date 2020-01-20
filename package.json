@@ -1,6 +1,6 @@
 {
   "name": "android-linkify-js",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A Typescript port of Android Linkify utility",
   "main": "dist/index.js",
   "repository": "https://github.com/vbfox/android-linkify-js",
