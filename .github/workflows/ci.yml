@@ -9,7 +9,7 @@ jobs:
 
     steps:
     - name: Setup Node.js for use with actions
-      uses: actions/setup-node@v1.1.0
+      uses: actions/setup-node@v3
     - uses: actions/checkout@v1
     - name: Package install
       run: yarn install --frozen-lockfile
