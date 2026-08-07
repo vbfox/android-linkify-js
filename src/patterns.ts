@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-import { isDigit } from "./utils";
-
 /**
  *  Regular expression to match all IANA top-level domains.
  *
@@ -400,17 +398,3 @@ export const PHONE = new RegExp(
         "([0-9][0-9\\- \\.]+[0-9])",
     "g",
 ); // <digit><digit|sdd>+<digit>
-
-export function digitsAndPlusOnly(matches: RegExpExecArray): string {
-    let buffer = "";
-    let matchingRegion = matches[0];
-
-    for (let i = 0, size = matchingRegion.length; i < size; i++) {
-        const character = matchingRegion.charAt(i);
-        if (character == "+" || isDigit(character)) {
-            buffer += character;
-        }
-    }
-
-    return buffer;
-}
