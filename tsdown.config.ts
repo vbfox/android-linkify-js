@@ -47,6 +47,20 @@ export default defineConfig({
     sourcemap: true,
     clean: true,
     unbundle: true,
+    // Are the types wrong, publint, and an unused dependency check. They run
+    // after the build, so a broken exports map, bad package metadata or a
+    // stray dependency shows up before publishing rather than after.
+    //
+    // They report but do not fail the build. tsdown --fail-on-warn would
+    // gate them, but it also promotes the "TypeScript 7.0 does not yet have
+    // a stable API" warning to an error, which fails every build while we
+    // are on TS7. Worth revisiting once that warning goes away.
+    //
+    // The esm-only profile stops attw flagging that CJS consumers resolve to
+    // ESM. That is what an ESM only package is, not a mistake to fix.
+    attw: { profile: "esm-only" },
+    publint: true,
+    unused: true,
     banner: {
         js: licenseBanner,
         dts: licenseBanner,
