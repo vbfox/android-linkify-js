@@ -46,54 +46,26 @@ worth having a mask that leaves it out.
 
 ## Relationship to the Android sources
 
-This is a port of two files from the Android platform:
+This is a port of two files from the Android platform, as of **Android 10 (Q)**,
+tag [`android-10.0.0_r1`](https://github.com/aosp-mirror/platform_frameworks_base/tree/android-10.0.0_r1):
 
 | Android source                             | Ported to         |
 | ------------------------------------------ | ----------------- |
 | `core/java/android/text/util/Linkify.java` | `src/linkify.ts`  |
 | `core/java/android/util/Patterns.java`     | `src/patterns.ts` |
 
-### Which version
+It differs from the original in a few ways:
 
-The port corresponds to **Android 10 (Q)**, tag
-[`android-10.0.0_r1`](https://github.com/aosp-mirror/platform_frameworks_base/tree/android-10.0.0_r1),
-commit `86e1b88457ce70ec40aa2f94af36267993fd4145` in the `aosp-mirror/platform_frameworks_base`
-mirror.
-
-That is approximate, in the sense that no upstream commit is recorded anywhere
-in this repository's history. It is what the code itself indicates. Three
-things present in the port appear in `Linkify.java` for the first time at
-`android-10.0.0_r1`, and are absent at `android-9.0.0_r1`:
-
-- `containsUnsupportedCharacters`, rejecting the U+202C, U+202D and U+202E
-  bidirectional override characters
-- the `urlSpanFactory` parameter, which survives here only as a leftover
-  `@param` line in the `addAutoLinks` doc comment
-- the doc comment on `ALL` noting that `MAP_ADDRESSES` is deprecated in favour
-  of `TextClassifier#generateLinks`
-
-The port's first commits are dated 2019-12-01, a couple of months after
-Android 10 was released, which fits.
-
-`Linkify.java` is nearly identical at `android-11.0.0_r1`, so the port cannot
-be told apart from that version by content alone. The only differences between
-the two are inside `gatherTelLinks`, which was never ported, and one import.
-
-### Where it diverges
-
-**Phone numbers use `Patterns.PHONE`, not libphonenumber.** Android gathers
-`tel:` links with `PhoneNumberUtil.findNumbers` from libphonenumber, resolving
-a region code from the SIM or default locale. It has done so since at least
-Android 4.4. That needs several hundred kilobytes of metadata, and this package
-ships no runtime dependencies, so phone numbers are matched here with the
-`Patterns.PHONE` regex plus the `sPhoneNumberMatchFilter` and
-`sPhoneNumberTransformFilter` filters, which are still public API in current
-Android. The result is less accurate for international numbers.
-
-**`MAP_ADDRESSES` is not implemented.** It is deprecated upstream.
-
-**No `Spannable`, `URLSpan` or `Context`.** `addAutoLinks` returns
-`LinkSpec[] | false` instead of mutating a `Spannable` and returning a boolean.
+- **Phone numbers are matched with `Patterns.PHONE`, not libphonenumber.**
+  Android gathers `tel:` links with libphonenumber, resolving a region code
+  from the SIM or default locale. That would be a large runtime dependency for
+  a package that currently has none, so the regex plus Android's
+  `sPhoneNumberMatchFilter` and `sPhoneNumberTransformFilter` are used instead.
+  The result is less accurate for international numbers.
+- **`MAP_ADDRESSES` is not implemented.** It is deprecated upstream.
+- **No `Spannable`, `URLSpan` or `Context`.** `addAutoLinks` returns
+  `LinkSpec[] | false` instead of mutating a `Spannable` and returning a
+  boolean.
 
 ## Development
 
