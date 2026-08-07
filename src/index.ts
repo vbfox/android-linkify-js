@@ -16,8 +16,10 @@
  */
 
 import { addAutoLinks, addLinks } from "./linkify";
+import { ALL, EMAIL_ADDRESSES, PHONE_NUMBERS, WEB_URLS } from "./linkify";
 import type { MatchFilter, TransformFilter } from "./linkify";
 import type { LinkSpec } from "./LinkSpec";
 
 export { addAutoLinks, addLinks };
+export { ALL, EMAIL_ADDRESSES, PHONE_NUMBERS, WEB_URLS };
 export type { MatchFilter, TransformFilter, LinkSpec };

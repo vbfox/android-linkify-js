@@ -14,6 +14,14 @@
  * limitations under the License.
  */
 
+const DIGIT = /\p{Nd}/u;
+
+/**
+ * Whether a single character is a digit.
+ *
+ * Mirrors Java's Character.isDigit, which is Unicode aware and accepts any
+ * character in the Nd (decimal number) category, not only ASCII 0-9.
+ */
 export function isDigit(c: string): boolean {
-    throw new Error("not impl");
+    return DIGIT.test(c);
 }

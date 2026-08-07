@@ -16,7 +16,7 @@
  */
 
 import { isDigit } from "./utils";
-import { digitsAndPlusOnly, AUTOLINK_WEB_URL, AUTOLINK_EMAIL_ADDRESS } from "./patterns";
+import { digitsAndPlusOnly, AUTOLINK_WEB_URL, AUTOLINK_EMAIL_ADDRESS, PHONE } from "./patterns";
 import { logError } from "./log";
 import { type LinkSpec, pruneOverlaps } from "./LinkSpec";
 
@@ -76,13 +76,19 @@ export const WEB_URLS = 0x01;
 export const EMAIL_ADDRESSES = 0x02;
 
 /**
+ *  Bit field indicating that phone numbers should be matched in methods that
+ *  take an options mask
+ */
+export const PHONE_NUMBERS = 0x04;
+
+/**
  *  Bit mask indicating that all available patterns should be matched in
  *  methods that take an options mask
  *  <p><strong>Note:</strong></p> {@link #MAP_ADDRESSES} is deprecated.
  *  Use {@link android.view.textclassifier.TextClassifier#generateLinks(TextLinks.Request)}
  *  instead and avoid it even when targeting API levels where no alternative is available.
  */
-export const ALL = WEB_URLS | EMAIL_ADDRESSES;
+export const ALL = WEB_URLS | EMAIL_ADDRESSES | PHONE_NUMBERS;
 
 /**
  * Don't treat anything with fewer than this many digits as a
@@ -165,6 +171,16 @@ export function addAutoLinks(text: string, mask?: number): LinkSpec[] | false {
     }
     if ((mask & EMAIL_ADDRESSES) != 0) {
         gatherLinks(links, text, AUTOLINK_EMAIL_ADDRESS, ["mailto:"], undefined, undefined);
+    }
+    if ((mask & PHONE_NUMBERS) != 0) {
+        gatherLinks(
+            links,
+            text,
+            PHONE,
+            ["tel:"],
+            sPhoneNumberMatchFilter,
+            sPhoneNumberTransformFilter,
+        );
     }
     pruneOverlaps(links);
     if (links.length == 0) {
