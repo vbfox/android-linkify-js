@@ -46,6 +46,7 @@ export default defineConfig({
     dts: true,
     sourcemap: true,
     clean: true,
+    unbundle: true,
     banner: {
         js: licenseBanner,
         dts: licenseBanner,
