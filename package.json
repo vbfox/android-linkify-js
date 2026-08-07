@@ -38,6 +38,11 @@
     "linkify",
     "parse"
   ],
+  "dependenciesMeta": {
+    "lefthook": {
+      "built": true
+    }
+  },
   "devDependencies": {
     "lefthook": "^2.1.10",
     "prettier": "^3.9.6",

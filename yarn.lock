@@ -586,6 +586,9 @@ __metadata:
     tsdown: "npm:^0.22.14"
     typescript: "npm:^7.0.2"
     vitest: "npm:^4.1.10"
+  dependenciesMeta:
+    lefthook:
+      built: true
   languageName: unknown
   linkType: soft
 
