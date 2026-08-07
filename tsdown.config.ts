@@ -47,6 +47,9 @@ export default defineConfig({
     sourcemap: true,
     clean: true,
     unbundle: true,
+    attw: { profile: "esm-only" },
+    publint: true,
+    unused: true,
     banner: {
         js: licenseBanner,
         dts: licenseBanner,

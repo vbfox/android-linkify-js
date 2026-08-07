@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "description": "A Typescript port of Android Linkify utility",
   "type": "module",
-  "repository": "https://github.com/vbfox/android-linkify-js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vbfox/android-linkify-js.git"
+  },
   "author": "Julien Roncaglia <julien@roncaglia.fr>",
   "license": "Apache-2.0",
   "exports": {
@@ -44,10 +47,13 @@
     }
   },
   "devDependencies": {
+    "@arethetypeswrong/core": "^0.18.5",
     "lefthook": "^2.1.10",
     "prettier": "^3.9.6",
+    "publint": "^0.3.23",
     "tsdown": "^0.22.14",
     "typescript": "^7.0.2",
+    "unplugin-unused": "^0.6.0",
     "vitest": "^4.1.10"
   },
   "packageManager": "yarn@4.18.0"
