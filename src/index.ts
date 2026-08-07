@@ -1,7 +1,3 @@
-import { addAutoLinks, addLinks } from "./linkify";
-import type { MatchFilter, TransformFilter } from "./linkify";
-import type { LinkSpec } from "./LinkSpec";
-
 /*
  * Copyright (C) 2007 The Android Open Source Project
  * Copyright (C) 2019 Julien Roncaglia <julien@roncaglia.fr>
@@ -18,6 +14,10 @@ import type { LinkSpec } from "./LinkSpec";
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+import { addAutoLinks, addLinks } from "./linkify";
+import type { MatchFilter, TransformFilter } from "./linkify";
+import type { LinkSpec } from "./LinkSpec";
 
 export { addAutoLinks, addLinks };
 export type { MatchFilter, TransformFilter, LinkSpec };
