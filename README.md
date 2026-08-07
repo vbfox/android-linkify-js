@@ -49,11 +49,10 @@ tag [`android-10.0.0_r1`](https://github.com/aosp-mirror/platform_frameworks_bas
 
 It differs from the original in a few ways:
 
-- **Phone numbers are not linked.** Android gathers `tel:` links with
-  libphonenumber, resolving a region code from the SIM or default locale. That
-  would be a large runtime dependency for a package that currently has none.
-  The `PHONE` pattern itself is ported, in `src/patterns.ts`, but it is not
-  part of the public API.
+- **Phone numbers are not linked**, and the `PHONE` pattern is not ported.
+  Android gathers `tel:` links with libphonenumber, resolving a region code
+  from the SIM or default locale, which would be a large runtime dependency for
+  a package that currently has none.
 - **`MAP_ADDRESSES` is not implemented.** It is deprecated upstream.
 - **No `Spannable`, `URLSpan` or `Context`.** `addAutoLinks` returns
   `LinkSpec[] | false` instead of mutating a `Spannable` and returning a
