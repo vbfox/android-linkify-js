@@ -1,5 +1,3 @@
-import { isDigit } from "./utils";
-
 /*
  * Copyright (C) 2007 The Android Open Source Project
  *
@@ -15,6 +13,8 @@ import { isDigit } from "./utils";
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+import { isDigit } from "./utils";
 
 /**
  *  Regular expression to match all IANA top-level domains.
