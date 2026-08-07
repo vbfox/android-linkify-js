@@ -91,6 +91,15 @@ export const PHONE_NUMBERS = 0x04;
 export const ALL = WEB_URLS | EMAIL_ADDRESSES | PHONE_NUMBERS;
 
 /**
+ *  Bit mask matching everything {@link ALL} does except phone numbers.
+ *
+ *  Has no equivalent in Android. Phone matching is regex based and links any
+ *  run of five or more digits, which is not always wanted, so this is the mask
+ *  to reach for when only web URLs and email addresses should be linked.
+ */
+export const ALL_NO_PHONE = WEB_URLS | EMAIL_ADDRESSES;
+
+/**
  * Don't treat anything with fewer than this many digits as a
  * phone number.
  */

@@ -16,7 +16,13 @@
  */
 
 import { expect, test } from "vitest";
-import { addAutoLinks, EMAIL_ADDRESSES, PHONE_NUMBERS, WEB_URLS } from "../src/linkify";
+import {
+    addAutoLinks,
+    ALL_NO_PHONE,
+    EMAIL_ADDRESSES,
+    PHONE_NUMBERS,
+    WEB_URLS,
+} from "../src/linkify";
 import { PHONE } from "../src/patterns";
 
 /**
@@ -121,6 +127,16 @@ test("phone numbers can be gathered on their own", () => {
 test("a mask without PHONE_NUMBERS does not link phone numbers", () => {
     expect(addAutoLinks("Me: 16505551212 this", WEB_URLS)).toEqual(false);
     expect(addAutoLinks("Me: 16505551212 this", EMAIL_ADDRESSES)).toEqual(false);
+});
+
+test("ALL_NO_PHONE links urls and emails but not phone numbers", () => {
+    expect(addAutoLinks("call 16505551212 or mail test@example.com", ALL_NO_PHONE)).toEqual([
+        { url: "mailto:test@example.com", start: 25, end: 41 },
+    ]);
+    expect(addAutoLinks("x http://google.com/ x", ALL_NO_PHONE)).toEqual([
+        { url: "http://google.com", start: 2, end: 19 },
+    ]);
+    expect(addAutoLinks("Me: 16505551212 this", ALL_NO_PHONE)).toEqual(false);
 });
 
 test("phone numbers are gathered alongside urls and emails, sorted by position", () => {
