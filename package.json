@@ -22,6 +22,9 @@
   "scripts": {
     "build": "tsdown",
     "typecheck": "tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "postinstall": "lefthook install",
     "prepublishOnly": "yarn build",
     "test": "vitest run",
     "preversion": "yarn build",
@@ -35,7 +38,14 @@
     "linkify",
     "parse"
   ],
+  "dependenciesMeta": {
+    "lefthook": {
+      "built": true
+    }
+  },
   "devDependencies": {
+    "lefthook": "^2.1.10",
+    "prettier": "^3.9.6",
     "tsdown": "^0.22.14",
     "typescript": "^7.0.2",
     "vitest": "^4.1.10"

@@ -1,0 +1,7 @@
+pre-commit:
+  parallel: true
+  jobs:
+    - name: prettier
+      glob: "*.{ts,js,mjs,cjs,json,yml,yaml,md}"
+      run: yarn prettier --write --ignore-unknown {staged_files}
+      stage_fixed: true
