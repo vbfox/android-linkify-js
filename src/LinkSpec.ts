@@ -45,12 +45,12 @@ export function pruneOverlaps(links: LinkSpec[]) {
         const a = links[i];
         const b = links[i + 1];
         let remove = -1;
-        if ((a.start <= b.start) && (a.end > b.start)) {
+        if (a.start <= b.start && a.end > b.start) {
             if (b.end <= a.end) {
                 remove = i + 1;
-            } else if ((a.end - a.start) > (b.end - b.start)) {
+            } else if (a.end - a.start > b.end - b.start) {
                 remove = i + 1;
-            } else if ((a.end - a.start) < (b.end - b.start)) {
+            } else if (a.end - a.start < b.end - b.start) {
                 remove = i;
             }
             if (remove != -1) {

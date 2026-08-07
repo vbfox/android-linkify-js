@@ -19,5 +19,5 @@ import type { LinkSpec } from "./LinkSpec";
  * limitations under the License.
  */
 
-export { addAutoLinks, addLinks }
-export type { MatchFilter, TransformFilter, LinkSpec }
+export { addAutoLinks, addLinks };
+export type { MatchFilter, TransformFilter, LinkSpec };

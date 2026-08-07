@@ -48,7 +48,7 @@ export type MatchFilter = (s: string, start: number, end: number) => boolean;
 /**
  *  Examines the matched text and either passes it through or uses the
  *  data in the Matcher state to produce a replacement.
- * 
+ *
  *  TransformFilter enables client code to have more control over
  *  how matched patterns are represented as URLs.
  *
@@ -98,7 +98,7 @@ const sUrlMatchFilter: MatchFilter = (s, start, end) => {
     if (start == 0) {
         return true;
     }
-    if (s.charAt(start - 1) == '@') {
+    if (s.charAt(start - 1) == "@") {
         return false;
     }
     return true;
@@ -154,14 +154,17 @@ export function addAutoLinks(text: string, mask?: number): LinkSpec[] | false {
 
     const links: LinkSpec[] = [];
     if ((mask & WEB_URLS) != 0) {
-        gatherLinks(links, text, AUTOLINK_WEB_URL,
+        gatherLinks(
+            links,
+            text,
+            AUTOLINK_WEB_URL,
             ["http://", "https://", "rtsp://"],
-            sUrlMatchFilter, undefined);
+            sUrlMatchFilter,
+            undefined,
+        );
     }
     if ((mask & EMAIL_ADDRESSES) != 0) {
-        gatherLinks(links, text, AUTOLINK_EMAIL_ADDRESS,
-            ["mailto:"],
-            undefined, undefined);
+        gatherLinks(links, text, AUTOLINK_EMAIL_ADDRESS, ["mailto:"], undefined, undefined);
     }
     pruneOverlaps(links);
     if (links.length == 0) {
@@ -211,9 +214,14 @@ function containsUnsupportedCharacters(text: string) {
  *
  * @return True if at least one link is found and applied.
  */
-export function addLinks(spannable: string, pattern: RegExp,
-    defaultScheme: string | undefined, schemes: string[] | undefined,
-    matchFilter: MatchFilter | undefined, transformFilter: TransformFilter) {
+export function addLinks(
+    spannable: string,
+    pattern: RegExp,
+    defaultScheme: string | undefined,
+    schemes: string[] | undefined,
+    matchFilter: MatchFilter | undefined,
+    transformFilter: TransformFilter,
+) {
     if (spannable != null && containsUnsupportedCharacters(spannable.toString())) {
         return false;
     }
@@ -226,7 +234,7 @@ export function addLinks(spannable: string, pattern: RegExp,
     schemesCopy = [];
     schemesCopy.push(defaultScheme.toLowerCase());
     for (const scheme of schemes) {
-        schemesCopy.push((scheme == undefined) ? "" : scheme.toLowerCase())
+        schemesCopy.push(scheme == undefined ? "" : scheme.toLowerCase());
     }
 
     let links: LinkSpec[] = [];
@@ -247,8 +255,12 @@ export function addLinks(spannable: string, pattern: RegExp,
     return links;
 }
 
-function makeUrl(url: string, prefixes: string[],
-    matcher: RegExpExecArray, filter: TransformFilter | undefined) {
+function makeUrl(
+    url: string,
+    prefixes: string[],
+    matcher: RegExpExecArray,
+    filter: TransformFilter | undefined,
+) {
     if (filter !== undefined) {
         url = filter(matcher, url);
     }
@@ -260,10 +272,12 @@ function makeUrl(url: string, prefixes: string[],
         }
 
         const urlPrefixRange = url.substring(0, prefixes[i].length);
-        if (urlPrefixRange.localeCompare(prefixes[i], undefined, { sensitivity: 'accent' }) === 0) {
+        if (urlPrefixRange.localeCompare(prefixes[i], undefined, { sensitivity: "accent" }) === 0) {
             hasPrefix = true;
             // Fix capitalization if necessary
-            if (urlPrefixRange.localeCompare(prefixes[i], undefined, { sensitivity: 'case' }) !== 0) {
+            if (
+                urlPrefixRange.localeCompare(prefixes[i], undefined, { sensitivity: "case" }) !== 0
+            ) {
                 url = prefixes[i] + url.substring(prefixes[i].length);
             }
             break;
@@ -277,10 +291,14 @@ function makeUrl(url: string, prefixes: string[],
     return url;
 }
 
-function gatherLinks(links: LinkSpec[],
-    s: string, pattern: RegExp, schemes: string[],
-    matchFilter: MatchFilter | undefined, transformFilter: TransformFilter | undefined) {
-
+function gatherLinks(
+    links: LinkSpec[],
+    s: string,
+    pattern: RegExp,
+    schemes: string[],
+    matchFilter: MatchFilter | undefined,
+    transformFilter: TransformFilter | undefined,
+) {
     let m: RegExpExecArray | null;
     while ((m = pattern.exec(s)) != null) {
         const start = m.index;

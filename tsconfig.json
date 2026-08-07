@@ -1,19 +1,17 @@
 {
-    "compilerOptions": {
-        "target": "es2023",
-        "lib": [
-            "es2023"
-        ],
-        "module": "esnext",
-        "moduleResolution": "bundler",
-        "verbatimModuleSyntax": true,
-        "isolatedModules": true,
-        "noImplicitAny": true,
-        "strict": true,
-        "removeComments": false,
-        "declaration": true,
-        "skipLibCheck": true,
-        "outDir": "dist"
-    },
-    "include": ["src", "__tests__", "tsdown.config.ts"]
+  "compilerOptions": {
+    "target": "es2023",
+    "lib": ["es2023"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "noImplicitAny": true,
+    "strict": true,
+    "removeComments": false,
+    "declaration": true,
+    "skipLibCheck": true,
+    "outDir": "dist"
+  },
+  "include": ["src", "__tests__", "tsdown.config.ts"]
 }
