@@ -1,3 +1,4 @@
+import { expect, test } from 'vitest';
 import { addAutoLinks } from '../src/linkify';
 
 test('empty', () => {

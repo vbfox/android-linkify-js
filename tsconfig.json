@@ -1,20 +1,19 @@
 {
     "compilerOptions": {
-        "ignoreDeprecations": "6.0",
-        "rootDir": "src",
-        "types": ["jest"],
-        "target": "es5",
-        "module": "commonjs",
-        "moduleResolution": "node",
+        "target": "es2023",
+        "lib": [
+            "es2023"
+        ],
+        "module": "esnext",
+        "moduleResolution": "bundler",
+        "verbatimModuleSyntax": true,
+        "isolatedModules": true,
         "noImplicitAny": true,
         "strict": true,
         "removeComments": false,
-        "allowSyntheticDefaultImports": true,
-        "outDir": "dist",
         "declaration": true,
-        "lib": [
-            "es2015"
-        ]
+        "skipLibCheck": true,
+        "outDir": "dist"
     },
-    "include": ["src"]
+    "include": ["src", "__tests__", "tsdown.config.ts"]
 }
