@@ -18,7 +18,7 @@
 import { isDigit } from "./utils";
 import { digitsAndPlusOnly, AUTOLINK_WEB_URL, AUTOLINK_EMAIL_ADDRESS } from "./patterns";
 import { logError } from "./log";
-import { LinkSpec, pruneOverlaps } from "./LinkSpec";
+import { type LinkSpec, pruneOverlaps } from "./LinkSpec";
 
 /**
  *  Examines the character span matched by the pattern and determines

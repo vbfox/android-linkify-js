@@ -1,5 +1,6 @@
-import { addAutoLinks, addLinks, MatchFilter, TransformFilter } from "./linkify";
-import { LinkSpec } from "./LinkSpec";
+import { addAutoLinks, addLinks } from "./linkify";
+import type { MatchFilter, TransformFilter } from "./linkify";
+import type { LinkSpec } from "./LinkSpec";
 
 /*
  * Copyright (C) 2007 The Android Open Source Project
@@ -18,4 +19,5 @@ import { LinkSpec } from "./LinkSpec";
  * limitations under the License.
  */
 
-export { addAutoLinks, addLinks, MatchFilter, TransformFilter, LinkSpec }
+export { addAutoLinks, addLinks }
+export type { MatchFilter, TransformFilter, LinkSpec }

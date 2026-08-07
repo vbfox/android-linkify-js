@@ -2,34 +2,43 @@
   "name": "android-linkify-js",
   "version": "0.1.0",
   "description": "A Typescript port of Android Linkify utility",
-  "main": "dist/index.js",
+  "type": "module",
   "repository": "https://github.com/vbfox/android-linkify-js",
   "author": "Julien Roncaglia <julien@roncaglia.fr>",
   "license": "Apache-2.0",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=22.18.0"
+  },
   "scripts": {
-    "build": "yarn tsc",
+    "build": "tsdown",
+    "typecheck": "tsc --noEmit",
     "prepublishOnly": "yarn build",
-    "test": "yarn jest",
+    "test": "vitest run",
     "preversion": "yarn build",
     "postversion": "git push && git push --tags"
   },
   "files": [
-    "dist/**/*.js",
-    "dist/**/*.d.ts"
+    "dist"
   ],
-  "directories": {
-    "lib": "dist"
-  },
   "keywords": [
     "link",
     "linkify",
     "parse"
   ],
   "devDependencies": {
-    "@types/jest": "^30.0.0",
-    "jest": "^30.4.2",
-    "ts-jest": "^29.4.12",
-    "typescript": "^6.0.3"
+    "tsdown": "^0.22.14",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.10"
   },
   "packageManager": "yarn@4.18.0"
 }
