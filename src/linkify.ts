@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { isDigit } from "./utils";
-import { digitsAndPlusOnly, AUTOLINK_WEB_URL, AUTOLINK_EMAIL_ADDRESS } from "./patterns";
+import { AUTOLINK_WEB_URL, AUTOLINK_EMAIL_ADDRESS } from "./patterns";
 import { logError } from "./log";
 import { type LinkSpec, pruneOverlaps } from "./LinkSpec";
 
@@ -85,12 +84,6 @@ export const EMAIL_ADDRESSES = 0x02;
 export const ALL = WEB_URLS | EMAIL_ADDRESSES;
 
 /**
- * Don't treat anything with fewer than this many digits as a
- * phone number.
- */
-export const PHONE_NUMBER_MINIMUM_DIGITS = 5;
-
-/**
  *  Filters out web URL matches that occur after an at-sign (@).  This is
  *  to prevent turning the domain name in an email address into a web link.
  */
@@ -103,31 +96,6 @@ const sUrlMatchFilter: MatchFilter = (s, start, end) => {
     }
     return true;
 };
-
-/**
- *  Filters out URL matches that don't have enough digits to be a
- *  phone number.
- */
-const sPhoneNumberMatchFilter: MatchFilter = (s, start, end) => {
-    let digitCount = 0;
-    for (let i = start; i < end; i++) {
-        if (isDigit(s.charAt(i))) {
-            digitCount++;
-            if (digitCount >= PHONE_NUMBER_MINIMUM_DIGITS) {
-                return true;
-            }
-        }
-    }
-    return false;
-};
-/**
- *  Transforms matched phone number text into something suitable
- *  to be used in a tel: URL.  It does this by removing everything
- *  but the digits and plus signs.  For instance:
- *  &apos;+1 (919) 555-1212&apos;
- *  becomes &apos;+19195551212&apos;
- */
-const sPhoneNumberTransformFilter: TransformFilter = (match) => digitsAndPlusOnly(match);
 
 /**
  *  Scans the text of the provided Spannable and turns all occurrences of the link types

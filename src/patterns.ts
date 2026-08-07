@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-import { isDigit } from "./utils";
-
 /**
  *  Regular expression to match all IANA top-level domains.
  *
@@ -378,39 +376,3 @@ export const EMAIL_ADDRESS = new RegExp(
         ")+",
     "g",
 );
-
-/**
- * This pattern is intended for searching for things that look like they
- * might be phone numbers in arbitrary text, not for validating whether
- * something is in fact a phone number.  It will miss many things that
- * are legitimate phone numbers.
- *
- * <p> The pattern matches the following:
- * <ul>
- * <li>Optionally, a + sign followed immediately by one or more digits. Spaces, dots, or dashes
- * may follow.
- * <li>Optionally, sets of digits in parentheses, separated by spaces, dots, or dashes.
- * <li>A string starting and ending with a digit, containing digits, spaces, dots, and/or dashes.
- * </ul>
- */
-export const PHONE = new RegExp(
-    // sdd = space, dot, or dash
-    "(\\+[0-9]+[\\- \\.]*)?" + // +<digits><sdd>*
-        "(\\([0-9]+\\)[\\- \\.]*)?" + // (<digits>)<sdd>*
-        "([0-9][0-9\\- \\.]+[0-9])",
-    "g",
-); // <digit><digit|sdd>+<digit>
-
-export function digitsAndPlusOnly(matches: RegExpExecArray): string {
-    let buffer = "";
-    let matchingRegion = matches[0];
-
-    for (let i = 0, size = matchingRegion.length; i < size; i++) {
-        const character = matchingRegion.charAt(i);
-        if (character == "+" || isDigit(character)) {
-            buffer += character;
-        }
-    }
-
-    return buffer;
-}
