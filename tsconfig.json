@@ -1,5 +1,8 @@
 {
     "compilerOptions": {
+        "ignoreDeprecations": "6.0",
+        "rootDir": "src",
+        "types": ["jest"],
         "target": "es5",
         "module": "commonjs",
         "moduleResolution": "node",
