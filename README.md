@@ -73,6 +73,39 @@ yarn lint        # oxlint
 
 oxfmt and oxlint run on commit through lefthook, and oxfmt re-stages what it fixes.
 
+## Releasing
+
+Publishing runs from [`.github/workflows/publish.yml`](.github/workflows/publish.yml)
+and authenticates with [npm trusted publishing](https://docs.npmjs.com/trusted-publishers):
+GitHub Actions mints an OIDC id-token, npm exchanges it for a short lived
+publish token, and the tarball gets a provenance attestation. There is no
+`NPM_TOKEN` secret, and none must be added — a configured token takes
+precedence over OIDC in Yarn and would silently bypass trusted publishing.
+
+The npm side is configured once, on the package's npmjs.com settings page,
+under _Trusted publisher_:
+
+| Field             | Value                |
+| ----------------- | -------------------- |
+| Publisher         | GitHub Actions       |
+| Organization/user | `vbfox`              |
+| Repository        | `android-linkify-js` |
+| Workflow filename | `publish.yml`        |
+| Environment       | _(empty)_            |
+| Allowed actions   | `npm publish`        |
+
+To cut a release:
+
+```sh
+yarn version <major|minor|patch>   # or edit the version by hand
+git commit -am "Release vX.Y.Z"
+git tag vX.Y.Z
+git push && git push --tags
+```
+
+The workflow refuses to publish if the tag does not match the version in
+`package.json`, then lints, typechecks, tests, builds and publishes.
+
 ## License
 
 Apache 2.0, the same license as the Android sources this is derived from. See
