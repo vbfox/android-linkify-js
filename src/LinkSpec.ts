@@ -21,24 +21,24 @@ export interface LinkSpec {
     end: number;
 }
 
-export function pruneOverlaps(links: LinkSpec[]) {
-    const c = (a: LinkSpec, b: LinkSpec) => {
-        if (a.start < b.start) {
-            return -1;
-        }
-        if (a.start > b.start) {
-            return 1;
-        }
-        if (a.end < b.end) {
-            return 1;
-        }
-        if (a.end > b.end) {
-            return -1;
-        }
-        return 0;
-    };
+function linkCompare(a: LinkSpec, b: LinkSpec) {
+    if (a.start < b.start) {
+        return -1;
+    }
+    if (a.start > b.start) {
+        return 1;
+    }
+    if (a.end < b.end) {
+        return 1;
+    }
+    if (a.end > b.end) {
+        return -1;
+    }
+    return 0;
+}
 
-    links.sort(c);
+export function pruneOverlaps(links: LinkSpec[]) {
+    links.sort(linkCompare);
     let len = links.length;
     let i = 0;
     while (i < len - 1) {

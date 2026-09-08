@@ -150,26 +150,6 @@ export const IP_ADDRESS_STRING =
  * Valid UCS characters defined in RFC 3987. Excludes space characters.
  */
 const UCS_CHAR = "\\xA0-\\u200D\\u2010-\\u2029\\u202F-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF";
-const UCS_CHAR_ =
-    "[" +
-    "\u00A0-\uD7FF" +
-    "\uF900-\uFDCF" +
-    "\uFDF0-\uFFEF" +
-    "\uD800\uDC00-\uD83F\uDFFD" +
-    "\uD840\uDC00-\uD87F\uDFFD" +
-    "\uD880\uDC00-\uD8BF\uDFFD" +
-    "\uD8C0\uDC00-\uD8FF\uDFFD" +
-    "\uD900\uDC00-\uD93F\uDFFD" +
-    "\uD940\uDC00-\uD97F\uDFFD" +
-    "\uD980\uDC00-\uD9BF\uDFFD" +
-    "\uD9C0\uDC00-\uD9FF\uDFFD" +
-    "\uDA00\uDC00-\uDA3F\uDFFD" +
-    "\uDA40\uDC00-\uDA7F\uDFFD" +
-    "\uDA80\uDC00-\uDABF\uDFFD" +
-    "\uDAC0\uDC00-\uDAFF\uDFFD" +
-    "\uDB00\uDC00-\uDB3F\uDFFD" +
-    "\uDB44\uDC00-\uDB7F\uDFFD" +
-    "&&[^\u00A0[\u2000-\u200A]\u2028\u2029\u202F\u3000]]";
 
 /**
  * Valid characters for IRI label defined in RFC 3987.
@@ -191,7 +171,7 @@ const IRI_LABEL = "[" + LABEL_CHAR + "](?:[" + LABEL_CHAR + "_\\-]{0,61}[" + LAB
  */
 const PUNYCODE_TLD = "xn\\-\\-[\\w\\-]{0,58}\\w";
 
-const TLD = "(" + PUNYCODE_TLD + "|" + "[" + TLD_CHAR + "]{2,63}" + ")";
+const TLD = "(" + PUNYCODE_TLD + "|[" + TLD_CHAR + "]{2,63})";
 
 const HOST_NAME = "(" + IRI_LABEL + "\\.)+" + TLD;
 
@@ -264,8 +244,7 @@ const STRICT_DOMAIN_NAME = "(?:" + STRICT_HOST_NAME + "|" + IP_ADDRESS_STRING + 
 /**
  * Regular expression that matches domain names without a TLD
  */
-const RELAXED_DOMAIN_NAME =
-    "(?:" + "(?:" + IRI_LABEL + "(?:\\.(?=\\S))" + "?)+" + "|" + IP_ADDRESS_STRING + ")";
+const RELAXED_DOMAIN_NAME = "(?:(?:" + IRI_LABEL + "(?:\\.(?=\\S))?)+|" + IP_ADDRESS_STRING + ")";
 
 /**
  * Regular expression to match strings that do not start with a supported protocol. The TLDs
@@ -340,7 +319,7 @@ const EMAIL_CHAR = LABEL_CHAR + "\\+\\-_%'";
  * the local part to be at most 64 octets.
  */
 const EMAIL_ADDRESS_LOCAL_PART =
-    "[" + EMAIL_CHAR + "]" + "(?:[" + EMAIL_CHAR + "\\.]{0,62}[" + EMAIL_CHAR + "])?";
+    "[" + EMAIL_CHAR + "](?:[" + EMAIL_CHAR + "\\.]{0,62}[" + EMAIL_CHAR + "])?";
 
 /**
  * Regular expression for the domain part of an email address. RFC5321 section 4.5.3.1.2 limits

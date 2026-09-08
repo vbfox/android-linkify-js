@@ -87,7 +87,7 @@ export const ALL = WEB_URLS | EMAIL_ADDRESSES;
  *  Filters out web URL matches that occur after an at-sign (@).  This is
  *  to prevent turning the domain name in an email address into a web link.
  */
-const sUrlMatchFilter: MatchFilter = (s, start, end) => {
+const sUrlMatchFilter: MatchFilter = (s, start, _end) => {
     if (start == 0) {
         return true;
     }
