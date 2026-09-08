@@ -67,10 +67,11 @@ yarn install     # installs deps and the pre-commit hook
 yarn test        # vitest
 yarn typecheck   # tsc --noEmit, since neither tsdown nor vitest checks types
 yarn build       # tsdown, ESM only, output mirrors src/
-yarn format      # prettier
+yarn format      # oxfmt
+yarn lint        # oxlint
 ```
 
-Prettier runs on commit through lefthook and re-stages what it fixes.
+oxfmt and oxlint run on commit through lefthook, and oxfmt re-stages what it fixes.
 
 ## License
 

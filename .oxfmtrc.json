@@ -1,8 +1,11 @@
 {
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
   "tabWidth": 4,
   "printWidth": 100,
   "semi": true,
   "singleQuote": false,
+  "sortPackageJson": false,
+  "ignorePatterns": ["dist/", ".yarn/", "yarn.lock"],
   "overrides": [
     {
       "files": ["*.json", "*.yml", "*.yaml", "*.md"],
