@@ -73,6 +73,21 @@ yarn lint        # oxlint
 
 oxfmt and oxlint run on commit through lefthook, and oxfmt re-stages what it fixes.
 
+## Releasing
+
+To cut a release:
+
+```sh
+yarn version <major|minor|patch>   # or edit the version by hand
+git commit -am "Release vX.Y.Z"
+git tag vX.Y.Z
+git push && git push --tags
+```
+
+The [publish workflow](.github/workflows/publish.yml) refuses to publish if the
+tag does not match the version in `package.json`, then lints, typechecks, tests,
+builds and publishes.
+
 ## License
 
 Apache 2.0, the same license as the Android sources this is derived from. See
