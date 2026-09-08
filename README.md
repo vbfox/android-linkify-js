@@ -1,5 +1,7 @@
 # android-linkify-js
 
+[![npm version](https://img.shields.io/npm/v/android-linkify-js.svg)](https://www.npmjs.com/package/android-linkify-js)
+
 A TypeScript port of Android's [`Linkify`](https://developer.android.com/reference/android/text/util/Linkify)
 utility: it finds web URLs and email addresses in plain text and reports where
 they are.
