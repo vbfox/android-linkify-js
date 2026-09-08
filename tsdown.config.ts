@@ -54,4 +54,11 @@ export default defineConfig({
         js: licenseBanner,
         dts: licenseBanner,
     },
+    inputOptions: {
+        experimental: {
+            // Disable "#region" being added to output files with the source file name.
+            // That isn't useful in unbundle mode
+            attachDebugInfo: "none",
+        },
+    },
 });
