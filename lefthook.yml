@@ -1,5 +1,4 @@
 pre-commit:
-  parallel: true
   jobs:
     - name: oxfmt
       glob: "*.{ts,js,mjs,cjs,json,jsonc,yml,yaml,md}"
@@ -8,3 +7,11 @@ pre-commit:
     - name: oxlint
       glob: "*.{ts,js,mjs,cjs}"
       run: yarn oxlint --no-error-on-unmatched-pattern {staged_files}
+
+pre-push:
+  parallel: true
+  jobs:
+    - name: oxlint
+      run: yarn lint
+    - name: oxfmt-check
+      run: yarn format:check
