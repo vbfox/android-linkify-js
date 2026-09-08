@@ -2,25 +2,30 @@
   "name": "android-linkify-js",
   "version": "0.1.0",
   "description": "A Typescript port of Android Linkify utility",
-  "type": "module",
+  "keywords": [
+    "link",
+    "linkify",
+    "parse"
+  ],
+  "license": "Apache-2.0",
+  "author": "Julien Roncaglia <julien@roncaglia.fr>",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vbfox/android-linkify-js.git"
   },
-  "author": "Julien Roncaglia <julien@roncaglia.fr>",
-  "license": "Apache-2.0",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
     "./package.json": "./package.json"
-  },
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "sideEffects": false,
-  "engines": {
-    "node": ">=22.18.0"
   },
   "scripts": {
     "build": "tsdown",
@@ -35,19 +40,6 @@
     "preversion": "yarn build",
     "postversion": "git push && git push --tags"
   },
-  "files": [
-    "dist"
-  ],
-  "keywords": [
-    "link",
-    "linkify",
-    "parse"
-  ],
-  "dependenciesMeta": {
-    "lefthook": {
-      "built": true
-    }
-  },
   "devDependencies": {
     "@arethetypeswrong/core": "^0.18.5",
     "lefthook": "^2.1.10",
@@ -58,6 +50,14 @@
     "typescript": "^7.0.2",
     "unplugin-unused": "^0.6.0",
     "vitest": "^4.1.10"
+  },
+  "dependenciesMeta": {
+    "lefthook": {
+      "built": true
+    }
+  },
+  "engines": {
+    "node": ">=22.18.0"
   },
   "packageManager": "yarn@4.18.0"
 }
