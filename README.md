@@ -75,25 +75,6 @@ oxfmt and oxlint run on commit through lefthook, and oxfmt re-stages what it fix
 
 ## Releasing
 
-Publishing runs from [`.github/workflows/publish.yml`](.github/workflows/publish.yml)
-and authenticates with [npm trusted publishing](https://docs.npmjs.com/trusted-publishers):
-GitHub Actions mints an OIDC id-token, npm exchanges it for a short lived
-publish token, and the tarball gets a provenance attestation. There is no
-`NPM_TOKEN` secret, and none must be added — a configured token takes
-precedence over OIDC in Yarn and would silently bypass trusted publishing.
-
-The npm side is configured once, on the package's npmjs.com settings page,
-under _Trusted publisher_:
-
-| Field             | Value                |
-| ----------------- | -------------------- |
-| Publisher         | GitHub Actions       |
-| Organization/user | `vbfox`              |
-| Repository        | `android-linkify-js` |
-| Workflow filename | `publish.yml`        |
-| Environment       | _(empty)_            |
-| Allowed actions   | `npm publish`        |
-
 To cut a release:
 
 ```sh
@@ -103,8 +84,9 @@ git tag vX.Y.Z
 git push && git push --tags
 ```
 
-The workflow refuses to publish if the tag does not match the version in
-`package.json`, then lints, typechecks, tests, builds and publishes.
+The [publish workflow](.github/workflows/publish.yml) refuses to publish if the
+tag does not match the version in `package.json`, then lints, typechecks, tests,
+builds and publishes.
 
 ## License
 
